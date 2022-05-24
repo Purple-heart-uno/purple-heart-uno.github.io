@@ -1,0 +1,10 @@
+{
+	"name": "Shape & Color",
+	"short_name": "Shape & Color",
+	"description": "Choose shape and color for diamonds",
+	"start_url": "index.html",
+	"display": "fullscreen",
+	"orientation": "portrait",
+	"background_color": "#ffffff",
+	"icons": []
+}
