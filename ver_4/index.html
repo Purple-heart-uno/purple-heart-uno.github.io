@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КиноРулетка - исключающий выбор фильма</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>КиноРулетка</h1>
+        <p class="subtitle">Исключающий выбор фильма для вечера</p>
+    </header>
+    
+    <div class="container">
+        <div class="tabs">
+            <button class="tab-button active" data-tab="selection">Выбор</button>
+            <button class="tab-button" data-tab="manage">Управление фильмами</button>
+        </div>
+        
+        <div class="tab-content active" id="selectionTab">
+            <div class="progress-container">
+                <div class="progress-step" id="genreStep">
+                    <span>1</span>
+                    <p>Выбор жанра</p>
+                </div>
+                <div class="progress-connector"></div>
+                <div class="progress-step" id="movieStep">
+                    <span>2</span>
+                    <p>Выбор фильма</p>
+                </div>
+            </div>
+            
+            <div class="selection-container" id="genreSelection">
+                <h2>Выберите жанр фильма</h2>
+                <p>Исключайте жанры, пока не останется один</p>
+                
+                <div class="wheel-container">
+                    <div class="center-pointer"></div>
+                    <div class="wheel" id="genreWheel">
+                        <!-- Жанры будут добавлены через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="exclude-button" id="excludeGenreButton">Исключить жанр</button>
+                    <button class="confirm-button" id="confirmGenreButton" disabled>Подтвердить жанр</button>
+                </div>
+                
+                <div class="excluded-items">
+                    <h3>Исключенные жанры:</h3>
+                    <div class="excluded-list" id="excludedGenres"></div>
+                </div>
+            </div>
+            
+            <div class="selection-container" id="movieSelection" style="display: none;">
+                <h2>Выберите фильм в жанре: <span id="selectedGenreName"></span></h2>
+                <p>Исключайте фильмы, пока не останется один</p>
+                
+                <div class="wheel-container">
+                    <div class="center-pointer"></div>
+                    <div class="wheel" id="movieWheel">
+                        <!-- Фильмы будут добавлены через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="exclude-button" id="excludeMovieButton">Исключить фильм</button>
+                    <button class="confirm-button" id="confirmMovieButton" disabled>Подтвердить фильм</button>
+                </div>
+                
+                <div class="excluded-items">
+                    <h3>Исключенные фильмы:</h3>
+                    <div class="excluded-list" id="excludedMovies"></div>
+                </div>
+            </div>
+            
+            <div class="result-container" id="finalResult" style="display: none;">
+                <h2>Ваш фильм на сегодня:</h2>
+                <div class="final-movie">
+                    <img id="finalPoster" src="" alt="">
+                    <h3 id="finalTitle"></h3>
+                    <p>Приятного просмотра!</p>
+                </div>
+                <button class="restart-button" id="restartButton">Начать заново</button>
+            </div>
+        </div>
+        
+        <div class="tab-content" id="manageTab">
+            <div class="management-panel">
+                <h2>Добавить новый фильм</h2>
+                <form id="addMovieForm">
+                    <div class="form-group">
+                        <label for="title">Название фильма:</label>
+                        <input type="text" id="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="poster">URL постера:</label>
+                        <input type="url" id="poster" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="genre">Жанр:</label>
+                        <select id="genre" required>
+                            <option value="">Выберите жанр</option>
+                            <!-- Жанры будут добавлены через JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit">Добавить фильм</button>
+                </form>
+                
+                <h2>Список фильмов</h2>
+                <div class="movie-cards" id="movieCards">
+                    <!-- Карточки фильмов будут добавлены через JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
