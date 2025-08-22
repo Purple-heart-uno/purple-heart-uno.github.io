@@ -1,0 +1,228 @@
+:root {
+    --primary: #e74c3c;
+    --secondary: #3498db;
+    --success: #27ae60;
+    --danger: #c0392b;
+    --warning: #f39c12;
+    --light: #ecf0f1;
+    --dark: #2c3e50;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+header {
+    background: var(--dark);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.tabs {
+    display: flex;
+    background: var(--light);
+    border-bottom: 2px solid #ddd;
+}
+
+.tab {
+    padding: 15px 30px;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.tab.active {
+    background: white;
+    border-bottom: 3px solid var(--primary);
+}
+
+.tab:hover {
+    background: #d6dbdf;
+}
+
+.content {
+    padding: 30px;
+    min-height: 400px;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+    animation: fadeIn 0.5s;
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all 0.3s;
+    margin: 5px;
+}
+
+.btn-primary { background: var(--primary); color: white; }
+.btn-secondary { background: var(--secondary); color: white; }
+.btn-success { background: var(--success); color: white; }
+.btn-danger { background: var(--danger); color: white; }
+.btn-warning { background: var(--warning); color: white; }
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.question {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: var(--dark);
+    text-align: center;
+}
+
+.answers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.film-list {
+    list-style: none;
+    margin: 20px 0;
+}
+
+.film-item {
+    padding: 15px;
+    margin: 10px 0;
+    background: var(--light);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.film-item:hover {
+    background: #d6dbdf;
+    transform: translateX(5px);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--dark);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--secondary);
+}
+
+.attributes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.attribute-item {
+    padding: 10px;
+    background: var(--light);
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.attribute-item.selected {
+    background: var(--success);
+    color: white;
+}
+
+.stats {
+    background: var(--light);
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.export-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.progress {
+    height: 10px;
+    background: #ddd;
+    border-radius: 5px;
+    margin: 20px 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--success);
+    transition: width 0.3s;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: var(--secondary);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .tabs { flex-direction: column; }
+    .tab { width: 100%; text-align: center; }
+    .answers-grid { grid-template-columns: 1fr 1fr; }
+}
