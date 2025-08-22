@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Киноман - угадай фильм</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎬 Киноман</h1>
+            <p>Угадай фильм по вопросам!</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('game')">Игра</button>
+            <button class="tab" onclick="showSection('admin')">Добавить фильм</button>
+            <button class="tab" onclick="showSection('database')">База данных</button>
+            <button class="tab" onclick="showSection('import-export')">Импорт/Экспорт</button>
+        </div>
+        
+        <div class="content">
+            <!-- Игра -->
+            <div id="game" class="section active">
+                <div class="question" id="questionText">Готовы начать игру? Загадайте фильм, а я попробую угадать его!</div>
+                <div class="progress">
+                    <div class="progress-bar" id="progressBar" style="width: 0%"></div>
+                </div>
+                <div class="answers-grid" id="answers" style="display: none;">
+                    <button class="btn btn-success" onclick="answerQuestion('да')">Да</button>
+                    <button class="btn btn-success" onclick="answerQuestion('скорее да')">Скорее да</button>
+                    <button class="btn btn-secondary" onclick="answerQuestion('не знаю')">Не знаю</button>
+                    <button class="btn btn-danger" onclick="answerQuestion('скорее нет')">Скорее нет</button>
+                    <button class="btn btn-danger" onclick="answerQuestion('нет')">Нет</button>
+                </div>
+                <div id="gameControls">
+                    <button class="btn btn-primary" onclick="startGame()">Начать игру</button>
+                    <button class="btn btn-warning" onclick="resetGame()">Сбросить игру</button>
+                </div>
+                <div id="result" style="display: none; margin-top: 20px;">
+                    <div id="guessResult"></div>
+                    <div id="filmOptions" style="display: none;">
+                        <p>Это один из этих фильмов?</p>
+                        <ul id="filmList" class="film-list"></ul>
+                        <button class="btn btn-secondary" onclick="continueGame()">Нет, продолжить угадывать</button>
+                    </div>
+                    <div id="guessButtons" style="display: none; margin-top: 20px;">
+                        <button class="btn btn-success" onclick="confirmGuess(true)">Да, угадал!</button>
+                        <button class="btn btn-danger" onclick="confirmGuess(false)">Нет, не угадал</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Админка -->
+            <div id="admin" class="section">
+                <h2>📝 Добавить новый фильм</h2>
+                
+                <div class="form-group">
+                    <label for="newFilmTitle">Название фильма:</label>
+                    <input type="text" id="newFilmTitle" class="form-control" placeholder="Введите название фильма">
+                </div>
+                
+                <h3>Выберите атрибуты:</h3>
+                <div id="loadingAttributes" class="loading">Загрузка атрибутов...</div>
+                <div class="attributes-grid" id="attributesGrid" style="display: none;">
+                    <!-- Атрибуты будут добавлены через JavaScript -->
+                </div>
+                
+                <div class="form-group">
+                    <label for="newAttribute">Добавить новый атрибут:</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="newAttribute" class="form-control" placeholder="Новый атрибут">
+                        <button class="btn btn-secondary" onclick="addNewAttribute()">Добавить</button>
+                    </div>
+                </div>
+                
+                <button class="btn btn-success" onclick="addFilmToDatabase()">Добавить фильм</button>
+                <div id="addFilmStatus" style="margin-top: 10px;"></div>
+                
+                <div class="stats">
+                    <h4>Статистика базы:</h4>
+                    <p>Фильмов: <span id="filmsCount">0</span></p>
+                    <p>Атрибутов: <span id="attributesCount">0</span></p>
+                </div>
+            </div>
+            
+            <!-- База данных -->
+            <div id="database" class="section">
+                <h2>🎥 База данных фильмов</h2>
+                <input type="text" id="searchFilm" class="form-control" placeholder="Поиск фильма..." oninput="searchFilms()">
+                <div id="loadingFilms" class="loading">Загрузка фильмов...</div>
+                <ul id="filmsList" class="film-list" style="display: none;">
+                    <!-- Список фильмов будет здесь -->
+                </ul>
+            </div>
+            
+            <!-- Импорт/Экспорт -->
+            <div id="import-export" class="section">
+                <h2>📁 Импорт/Экспорт базы данных</h2>
+                
+                <div class="export-buttons">
+                    <button class="btn btn-primary" onclick="exportDatabase()">Экспорт базы (JSON)</button>
+                    <button class="btn btn-success" onclick="downloadDatabase()">Скачать базу данных</button>
+                    <button class="btn btn-warning" onclick="resetDatabase()">Сбросить базу</button>
+                </div>
+                
+                <div class="form-group">
+                    <label for="importFile">Импорт базы данных:</label>
+                    <input type="file" id="importFile" class="form-control" accept=".json">
+                    <button class="btn btn-secondary" onclick="importDatabase()" style="margin-top: 10px;">Импортировать</button>
+                </div>
+                
+                <div class="stats">
+                    <h4>Инструкция для GitHub Pages:</h4>
+                    <ol>
+                        <li>Скачайте базу данных кнопкой выше</li>
+                        <li>Создайте репозиторий на GitHub</li>
+                        <li>Загрузите index.html, style.css, script.js и films_database.json</li>
+                        <li>Включите GitHub Pages в настройках репозитория</li>
+                        <li>Ваше приложение будет доступно по ссылке!</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
