@@ -1,9 +1,9 @@
 // База данных жанров
 const genres = [
-    { id: 'comedy', name: "Комедия", image: "https://cdn-icons-png.flaticon.com/512/1006/1006771.png" },
-    { id: 'drama', name: "Драма", image: "https://cdn-icons-png.flaticon.com/512/1030/1030931.png" },
-    { id: 'action', name: "Боевик", image: "https://cdn-icons-png.flaticon.com/512/2251/2251879.png" },
-    { id: 'animation', name: "Мультфильм", image: "https://cdn-icons-png.flaticon.com/512/2704/2704264.png" },
+    { id: 'comedy', name: "Комедия", image: "http://prod.cloud.rockstargames.com/crews/sc/4058/578944/publish/emblems/7f27794d22718aa74698c37065d0b9e8f1019367_512.png" },
+    { id: 'drama', name: "Драма", image: "https://avatars.mds.yandex.net/i?id=214fe60c40ff02b6a7ebafa56dd5e12f_l-5160870-images-thumbs&n=13" },
+    { id: 'action', name: "Боевик", image: "https://www.clipartmax.com/png/middle/226-2261823_tdm-icon-nobg-air-fuel-ratio-gauge.png" },
+    { id: 'animation', name: "Мультфильм", image: "https://avatars.mds.yandex.net/i?id=0b072b03fb9146538adac86631336b36_l-5232808-images-thumbs&n=13" },
     { id: 'horror', name: "Ужас", image: "https://cdn-icons-png.flaticon.com/512/2740/2740766.png" }
 ];
 
