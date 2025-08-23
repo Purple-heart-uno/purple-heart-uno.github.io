@@ -1,0 +1,462 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    color: #fff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: #e94560;
+    text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #8fe3cf;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    padding: 5px;
+    flex-wrap: wrap;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    border: none;
+    background: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: all 0.3s;
+    margin: 2px;
+}
+
+.tab-button.active {
+    background: #e94560;
+}
+
+.tab-content {
+    display: none;
+    width: 100%;
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.progress-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.progress-step span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.progress-step.active span {
+    background: #e94560;
+    box-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+}
+
+.progress-step p {
+    font-size: 0.9rem;
+}
+
+.progress-connector {
+    width: 100px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: 0 20px;
+}
+
+.selection-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.selection-container h2 {
+    margin-bottom: 10px;
+    color: #8fe3cf;
+}
+
+.selection-container p {
+    margin-bottom: 20px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.wheel-container {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    border: 5px solid #0f3460;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.wheel {
+    display: flex;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    transition-timing-function: cubic-bezier(0.1, 0.2, 0.3, 1);
+}
+
+.movie, .genre {
+    height: 100%;
+    width: 200px;
+    flex-shrink: 0;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #0f3460;
+}
+
+.movie-poster, .genre-image {
+    max-height: 90%;
+    max-width: 90%;
+    object-fit: contain;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+.top-pointer {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 20px solid #e94560;
+    z-index: 5;
+    filter: drop-shadow(0 0 5px rgba(233, 69, 96, 0.8));
+}
+
+.controls {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.exclude-button, .confirm-button, .restart-button {
+    background: linear-gradient(to right, #e94560, #c2185b);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.confirm-button {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+}
+
+.restart-button {
+    background: linear-gradient(to right, #2196F3, #0D47A1);
+}
+
+.exclude-button:hover, .confirm-button:hover, .restart-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.exclude-button:disabled, .confirm-button:disabled {
+    background: #555;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.excluded-items {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.excluded-items h3 {
+    margin-bottom: 15px;
+    color: #8fe3cf;
+    text-align: center;
+}
+
+.excluded-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+.excluded-item {
+    background: rgba(233, 69, 96, 0.2);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.result-container {
+    text-align: center;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+}
+
+.result-container h2 {
+    margin-bottom: 20px;
+    color: #8fe3cf;
+}
+
+.final-movie {
+    margin-bottom: 30px;
+}
+
+.final-movie img {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.final-movie h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #e94560;
+}
+
+.management-panel {
+    width: 100%;
+    max-width: 800px;
+}
+
+.management-panel h2 {
+    margin-bottom: 20px;
+    color: #8fe3cf;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input, .form-group select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #0f3460;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+#addMovieForm button {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.movie-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.movie-card {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.movie-card h3 {
+    padding: 10px;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.movie-card .genre {
+    padding: 0 10px 10px;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #8fe3cf;
+}
+
+.delete-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e94560;
+    color: white;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 40px;
+    color: #8fe3cf;
+    grid-column: 1 / -1;
+}
+
+.data-panel {
+    width: 100%;
+    max-width: 600px;
+}
+
+.data-section {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.data-section h3 {
+    color: #8fe3cf;
+    margin-bottom: 10px;
+}
+
+.data-section p {
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.data-button {
+    background: linear-gradient(to right, #2196F3, #0D47A1);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.data-button.confirm {
+    background: linear-gradient(to right, #4CAF50, #2E7D32);
+}
+
+.data-button.danger {
+    background: linear-gradient(to right, #e94560, #c2185b);
+}
+
+.data-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .wheel-container {
+        height: 250px;
+    }
+    
+    .movie, .genre {
+        width: 150px;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .exclude-button, .confirm-button {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .movie-cards {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+    
+    .tabs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .tab-button {
+        margin: 2px 0;
+    }
+}
