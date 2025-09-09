@@ -244,13 +244,17 @@ function excludeGenre() {
     // Блокируем кнопку на время анимации
     excludeGenreButton.disabled = true;
     
-    // Вычисляем случайное смещение
+    // Вычисляем случайное смещение с улучшенной рандомизацией
     const itemWidth = 200;
     const containerWidth = genreWheel.parentElement.offsetWidth;
     const centerOffset = (containerWidth / 2) - (itemWidth / 2);
-    const extraSpins = 3;
+    
+    // Улучшенная рандомизация:
     const randomIndex = Math.floor(Math.random() * session.availableGenres.length);
-    const targetPosition = centerOffset - (randomIndex * itemWidth + extraSpins * session.availableGenres.length * itemWidth);
+    const extraSpins = 3 + Math.floor(Math.random() * 3); // 3-5 дополнительных прокруток
+    const randomOffset = Math.floor(Math.random() * itemWidth) - itemWidth/2; // Случайное смещение ±100px
+    
+    const targetPosition = centerOffset - (randomIndex * itemWidth + extraSpins * session.availableGenres.length * itemWidth) + randomOffset;
     
     // Анимируем прокрутку
     genreWheel.style.transition = 'left 3s cubic-bezier(0.2, 0.8, 0.2, 1)';
@@ -309,13 +313,17 @@ function excludeMovie() {
     // Блокируем кнопку на время анимации
     excludeMovieButton.disabled = true;
     
-    // Вычисляем случайное смещение
+    // Вычисляем случайное смещение с улучшенной рандомизацией
     const itemWidth = 200;
     const containerWidth = movieWheel.parentElement.offsetWidth;
     const centerOffset = (containerWidth / 2) - (itemWidth / 2);
-    const extraSpins = 3;
+    
+    // Улучшенная рандомизация:
     const randomIndex = Math.floor(Math.random() * session.availableMovies.length);
-    const targetPosition = centerOffset - (randomIndex * itemWidth + extraSpins * session.availableMovies.length * itemWidth);
+    const extraSpins = 3 + Math.floor(Math.random() * 3); // 3-5 дополнительных прокруток
+    const randomOffset = Math.floor(Math.random() * itemWidth) - itemWidth/2; // Случайное смещение ±100px
+    
+    const targetPosition = centerOffset - (randomIndex * itemWidth + extraSpins * session.availableMovies.length * itemWidth) + randomOffset;
     
     // Анимируем прокрутку
     movieWheel.style.transition = 'left 3s cubic-bezier(0.2, 0.8, 0.2, 1)';
