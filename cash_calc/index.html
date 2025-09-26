@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Денежный поток - Виртуальная карта</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #1a1a2e;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .balance-card {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .balance {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .cashflow {
+            font-size: 18px;
+            color: #00b894;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .income-btn {
+            background: #00b894;
+            color: white;
+        }
+
+        .expense-btn {
+            background: #e84393;
+            color: white;
+        }
+
+        .monthly-section {
+            background: #16213e;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .monthly-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .history {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .income-text {
+            color: #00b894;
+            font-weight: bold;
+        }
+
+        .expense-text {
+            color: #e84393;
+            font-weight: bold;
+        }
+
+        .description {
+            flex: 1;
+            margin: 0 10px;
+            font-size: 14px;
+        }
+
+        .date {
+            font-size: 12px;
+            color: #b2bec3;
+        }
+
+        .delete-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1 class="title">💳 Виртуальная карта</h1>
+    </div>
+
+    <div class="balance-card">
+        <div class="balance" id="balance">Баланс: 10,000 ¥</div>
+        <div class="cashflow" id="cashflow">Cashflow: 2,000 ¥/мес</div>
+    </div>
+
+    <div class="buttons">
+        <button class="button income-btn" onclick="addIncome()">+ Доход</button>
+        <button class="button expense-btn" onclick="addExpense()">- Расход</button>
+    </div>
+
+    <div class="monthly-section">
+        <h3 class="section-title">📅 Ежемесячные операции</h3>
+        <div id="monthly-operations">
+            <!-- Ежемесячные доходы/расходы будут здесь -->
+        </div>
+        <button class="button income-btn" onclick="addMonthlyIncome()" style="width: 100%; margin-top: 10px;">
+            + Добавить ежемесячный доход
+        </button>
+        <button class="button expense-btn" onclick="addMonthlyExpense()" style="width: 100%; margin-top: 5px;">
+            + Добавить ежемесячный расход
+        </button>
+    </div>
+
+    <div class="history">
+        <h3 class="section-title">📋 История операций</h3>
+        <div id="transactions">
+            <!-- Операции будут здесь -->
+        </div>
+    </div>
+
+    <script>
+        // Данные игрока
+        let playerData = {
+            balance: 10000,
+            cashflow: 2000,
+            transactions: [
+                { id: 1, type: 'income', amount: 2000, description: 'Стартовая зарплата', date: new Date(), monthly: false }
+            ],
+            monthlyOperations: [
+                { id: 101, type: 'income', amount: 2000, description: 'Зарплата', monthly: true },
+                { id: 102, type: 'expense', amount: 500, description: 'Налоги', monthly: true }
+            ]
+        };
+
+        // Обновление интерфейса
+        function updateUI() {
+            // Обновляем баланс и cashflow
+            document.getElementById('balance').textContent = `Баланс: ${playerData.balance.toLocaleString()} ¥`;
+            
+            // Пересчитываем cashflow из ежемесячных операций
+            const monthlyIncome = playerData.monthlyOperations
+                .filter(op => op.type === 'income')
+                .reduce((sum, op) => sum + op.amount, 0);
+                
+            const monthlyExpenses = playerData.monthlyOperations
+                .filter(op => op.type === 'expense')
+                .reduce((sum, op) => sum + op.amount, 0);
+                
+            playerData.cashflow = monthlyIncome - monthlyExpenses;
+            document.getElementById('cashflow').textContent = `Cashflow: ${playerData.cashflow.toLocaleString()} ¥/мес`;
+
+            // Обновляем ежемесячные операции
+            const monthlyContainer = document.getElementById('monthly-operations');
+            monthlyContainer.innerHTML = '';
+            
+            playerData.monthlyOperations.forEach(operation => {
+                const item = document.createElement('div');
+                item.className = 'monthly-item';
+                item.innerHTML = `
+                    <span class="${operation.type === 'income' ? 'income-text' : 'expense-text'}">
+                        ${operation.type === 'income' ? '✅ +' : '❌ -'}${operation.amount.toLocaleString()} ¥
+                    </span>
+                    <span class="description">${operation.description}</span>
+                    <button class="delete-btn" onclick="deleteMonthlyOperation(${operation.id})">×</button>
+                `;
+                monthlyContainer.appendChild(item);
+            });
+
+            // Обновляем историю операций
+            const transactionsContainer = document.getElementById('transactions');
+            transactionsContainer.innerHTML = '';
+            
+            playerData.transactions.forEach(transaction => {
+                const item = document.createElement('div');
+                item.className = 'transaction';
+                item.innerHTML = `
+                    <span class="${transaction.type === 'income' ? 'income-text' : 'expense-text'}">
+                        ${transaction.type === 'income' ? '✅ +' : '❌ -'}${transaction.amount.toLocaleString()} ¥
+                    </span>
+                    <span class="description">${transaction.description}</span>
+                    <span class="date">${transaction.date.toLocaleDateString('ru-RU')}</span>
+                `;
+                transactionsContainer.appendChild(item);
+            });
+        }
+
+        // Добавление разового дохода
+        function addIncome() {
+            const amount = parseInt(prompt('Сумма дохода:'));
+            if (!amount || amount <= 0) return;
+            
+            const description = prompt('Описание дохода:') || 'Доход';
+            
+            playerData.balance += amount;
+            playerData.transactions.unshift({
+                id: Date.now(),
+                type: 'income',
+                amount,
+                description,
+                date: new Date(),
+                monthly: false
+            });
+            
+            updateUI();
+        }
+
+        // Добавление разового расхода
+        function addExpense() {
+            const amount = parseInt(prompt('Сумма расхода:'));
+            if (!amount || amount <= 0 || amount > playerData.balance) return;
+            
+            const description = prompt('Описание расхода:') || 'Расход';
+            
+            playerData.balance -= amount;
+            playerData.transactions.unshift({
+                id: Date.now(),
+                type: 'expense',
+                amount,
+                description,
+                date: new Date(),
+                monthly: false
+            });
+            
+            updateUI();
+        }
+
+        // Добавление ежемесячного дохода
+        function addMonthlyIncome() {
+            const amount = parseInt(prompt('Сумма ежемесячного дохода:'));
+            if (!amount || amount <= 0) return;
+            
+            const description = prompt('Описание дохода:') || 'Ежемесячный доход';
+            
+            playerData.monthlyOperations.push({
+                id: Date.now(),
+                type: 'income',
+                amount,
+                description,
+                monthly: true
+            });
+            
+            updateUI();
+        }
+
+        // Добавление ежемесячного расхода
+        function addMonthlyExpense() {
+            const amount = parseInt(prompt('Сумма ежемесячного расхода:'));
+            if (!amount || amount <= 0) return;
+            
+            const description = prompt('Описание расхода:') || 'Ежемесячный расход';
+            
+            playerData.monthlyOperations.push({
+                id: Date.now(),
+                type: 'expense',
+                amount,
+                description,
+                monthly: true
+            });
+            
+            updateUI();
+        }
+
+        // Удаление ежемесячной операции
+        function deleteMonthlyOperation(id) {
+            playerData.monthlyOperations = playerData.monthlyOperations.filter(op => op.id !== id);
+            updateUI();
+        }
+
+        // Получение зарплаты (применение ежемесячных операций)
+        function receiveSalary() {
+            const monthlyIncome = playerData.monthlyOperations
+                .filter(op => op.type === 'income')
+                .reduce((sum, op) => sum + op.amount, 0);
+                
+            const monthlyExpenses = playerData.monthlyOperations
+                .filter(op => op.type === 'expense')
+                .reduce((sum, op) => sum + op.amount, 0);
+                
+            const netCashflow = monthlyIncome - monthlyExpenses;
+            
+            if (netCashflow > 0) {
+                playerData.balance += netCashflow;
+                playerData.transactions.unshift({
+                    id: Date.now(),
+                    type: 'income',
+                    amount: netCashflow,
+                    description: 'Ежемесячный cashflow',
+                    date: new Date(),
+                    monthly: false
+                });
+            }
+            
+            updateUI();
+        }
+
+        // Добавляем кнопку получения зарплаты
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttonsContainer = document.querySelector('.buttons');
+            const salaryButton = document.createElement('button');
+            salaryButton.className = 'button income-btn';
+            salaryButton.textContent = '💰 Получить зарплату';
+            salaryButton.onclick = receiveSalary;
+            buttonsContainer.appendChild(salaryButton);
+            
+            // Первоначальная загрузка UI
+            updateUI();
+        });
+    </script>
+</body>
+</html>
