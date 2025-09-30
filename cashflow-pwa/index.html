@@ -74,195 +74,195 @@
                 </div>
                 <div class="balance" id="displayBalance"></div>
                 <!-- Добавьте в game-header после баланса -->
-                
-                        <div class="game-menu">
-                            <button class="menu-btn" onclick="showProfileManager()">👤</button>
-                            <button class="menu-btn" onclick="createNewCharacter()">🆕</button>
-                            <button class="menu-btn" onclick="logout()">🚪</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="game-content">
-                <div class="main-sections">
-                    <!-- Левая колонка: Доходы и Расходы -->
-                    <div class="financial-sections">
-                        <!-- Доходы -->
-                        <div class="section income">
-                            <h3>
-                                💰 Доходы (для зарплаты)
-                                <button class="add-btn" onclick="toggleAddForm('income')">+ Добавить</button>
-                            </h3>
-
-                            <!-- Форма добавления дохода -->
-                            <div class="add-form" id="incomeForm">
-                                <div class="form-row">
-                                    <input type="text" id="incomeName" placeholder="Название дохода">
-                                    <input type="number" id="incomeAmount" placeholder="Сумма ($)">
-                                </div>
-                                <div class="form-buttons">
-                                    <button class="save-btn" onclick="addIncome()">Сохранить</button>
-                                    <button class="cancel-btn" onclick="toggleAddForm('income')">Отмена</button>
-                                </div>
-                            </div>
-
-                            <ul class="item-list" id="incomeList">
-                                <!-- Доходы будут добавляться здесь динамически -->
-                            </ul>
-                        </div>
-
-                        <!-- Расходы -->
-                        <div class="section expenses">
-                            <h3>
-                                💸 Расходы (для зарплаты)
-                                <button class="add-btn" onclick="toggleAddForm('expense')">+ Добавить</button>
-                            </h3>
-
-                            <!-- Форма добавления расхода -->
-                            <div class="add-form" id="expenseForm">
-                                <div class="form-row">
-                                    <input type="text" id="expenseName" placeholder="Название расхода">
-                                    <input type="number" id="expenseAmount" placeholder="Сумма ($)">
-                                </div>
-                                <div class="form-buttons">
-                                    <button class="save-btn" onclick="addExpense()">Сохранить</button>
-                                    <button class="cancel-btn" onclick="toggleAddForm('expense')">Отмена</button>
-                                </div>
-                            </div>
-
-                            <ul class="item-list" id="expensesList">
-                                <!-- Расходы будут добавляться здесь динамически -->
-                            </ul>
-
-                            <!-- Сводка по зарплате -->
-                            <div class="salary-summary" id="salarySummary">
-                                <div class="summary-row">
-                                    <span>Общий доход:</span>
-                                    <span id="totalIncome">$0</span>
-                                </div>
-                                <div class="summary-row">
-                                    <span>Общие расходы:</span>
-                                    <span id="totalExpenses">$0</span>
-                                </div>
-                                <div class="summary-row total-salary">
-                                    <span>Зарплата:</span>
-                                    <span id="salaryAmount">$0</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Правая колонка: Активы и Пассивы -->
-                    <div class="financial-sections">
-                        <!-- Активы -->
-                        <div class="section assets">
-                            <h3>
-                                🏠 Активы (источники доходов)
-                                <button class="add-btn" onclick="toggleAddForm('asset')">+ Добавить</button>
-                            </h3>
-
-                            <!-- Форма добавления актива -->
-                            <div class="add-form" id="assetForm">
-                                <div class="form-row">
-                                    <input type="text" id="assetName" placeholder="Название актива">
-                                    <select id="assetType">
-                                        <option value="stocks">Акции</option>
-                                        <option value="realestate">Недвижимость</option>
-                                        <option value="business">Бизнес</option>
-                                        <option value="other">Другое</option>
-                                    </select>
-                                </div>
-                                <div class="form-row" id="stocksFields">
-                                    <input type="number" id="stocksQuantity" placeholder="Количество акций">
-                                    <input type="number" id="stocksPrice" placeholder="Цена за акцию ($)">
-                                </div>
-                                <div class="form-row" id="realestateFields" style="display: none;">
-                                    <input type="number" id="downPayment" placeholder="Первый взнос ($)">
-                                    <input type="number" id="propertyPrice" placeholder="Цена недвижимости ($)">
-                                </div>
-                                <div class="form-row" id="businessFields" style="display: none;">
-                                    <input type="number" id="businessDownPayment" placeholder="Первый взнос ($)">
-                                    <input type="number" id="businessPrice" placeholder="Цена бизнеса ($)">
-                                </div>
-                                <div class="form-row" id="otherAssetFields" style="display: none;">
-                                    <input type="text" id="assetDetails" placeholder="Описание актива">
-                                </div>
-                                <div class="form-buttons">
-                                    <button class="save-btn" onclick="addAsset()">Сохранить</button>
-                                    <button class="cancel-btn" onclick="toggleAddForm('asset')">Отмена</button>
-                                </div>
-                            </div>
-
-                            <ul class="item-list" id="assetsList">
-                                <!-- Активы будут добавляться здесь динамически -->
-                            </ul>
-                        </div>
-
-                        <!-- Пассивы -->
-                        <div class="section liabilities">
-                            <h3>
-                                🏦 Пассивы (источники расходов)
-                                <button class="add-btn" onclick="toggleAddForm('liability')">+ Добавить</button>
-                            </h3>
-
-                            <!-- Форма добавления пассива -->
-                            <div class="add-form" id="liabilityForm">
-                                <div class="form-row">
-                                    <input type="text" id="liabilityName" placeholder="Название пассива">
-                                    <input type="text" id="liabilityDetails" placeholder="Описание">
-                                </div>
-                                <div class="form-buttons">
-                                    <button class="save-btn" onclick="addLiability()">Сохранить</button>
-                                    <button class="cancel-btn" onclick="toggleAddForm('liability')">Отмена</button>
-                                </div>
-                            </div>
-
-                            <ul class="item-list" id="liabilitiesList">
-                                <!-- Пассивы будут добавляться здесь динамически -->
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Панель банкира -->
-                <div class="banker-panel" id="bankerPanel">
-                    <h3>Панель банкира</h3>
-                    <div class="banker-controls">
-                        <button class="control-btn salary-btn" onclick="paySalary()">
-                            Выдать зарплату
-                        </button>
-                        <button class="control-btn transaction-btn" onclick="showTransactionModal()">
-                            Провести операцию
-                        </button>
-                        <button class="control-btn qr-btn" onclick="showQRCodeModal()">
-                            Показать QR-код
-                        </button>
-                    </div>
-
-                    <!-- Список подключенных игроков -->
-                    <div class="connected-players" id="connectedPlayers">
-                        <h4>Подключенные игроки:</h4>
-                        <div class="players-list" id="playersList">
-                            <!-- Игроки будут появляться здесь -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Панель игрока -->
-                <div class="player-panel" id="playerPanel">
-                    <h3>Панель игрока</h3>
-                    <div class="player-controls">
-                        <button class="control-btn qr-btn" onclick="scanRoomQR()">
-                            📷 Сканировать QR комнаты
-                        </button>
-                        <button class="control-btn scan-btn" onclick="scanSalaryQR()">
-                            💰 Сканировать QR зарплаты
-                        </button>
-                    </div>
+                <div class="game-menu">
+                    <button class="menu-btn" onclick="showProfileManager()">👤</button>
+                    <button class="menu-btn" onclick="createNewCharacter()">🆕</button>
+                    <button class="menu-btn" onclick="logout()">🚪</button>
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="game-content">
+        <div class="main-sections">
+            <!-- Левая колонка: Доходы и Расходы -->
+            <div class="financial-sections">
+                <!-- Доходы -->
+                <div class="section income">
+                    <h3>
+                        💰 Доходы (для зарплаты)
+                        <button class="add-btn" onclick="toggleAddForm('income')">+ Добавить</button>
+                    </h3>
+
+                    <!-- Форма добавления дохода -->
+                    <div class="add-form" id="incomeForm">
+                        <div class="form-row">
+                            <input type="text" id="incomeName" placeholder="Название дохода">
+                            <input type="number" id="incomeAmount" placeholder="Сумма ($)">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="save-btn" onclick="addIncome()">Сохранить</button>
+                            <button class="cancel-btn" onclick="toggleAddForm('income')">Отмена</button>
+                        </div>
+                    </div>
+
+                    <ul class="item-list" id="incomeList">
+                        <!-- Доходы будут добавляться здесь динамически -->
+                    </ul>
+                </div>
+
+                <!-- Расходы -->
+                <div class="section expenses">
+                    <h3>
+                        💸 Расходы (для зарплаты)
+                        <button class="add-btn" onclick="toggleAddForm('expense')">+ Добавить</button>
+                    </h3>
+
+                    <!-- Форма добавления расхода -->
+                    <div class="add-form" id="expenseForm">
+                        <div class="form-row">
+                            <input type="text" id="expenseName" placeholder="Название расхода">
+                            <input type="number" id="expenseAmount" placeholder="Сумма ($)">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="save-btn" onclick="addExpense()">Сохранить</button>
+                            <button class="cancel-btn" onclick="toggleAddForm('expense')">Отмена</button>
+                        </div>
+                    </div>
+
+                    <ul class="item-list" id="expensesList">
+                        <!-- Расходы будут добавляться здесь динамически -->
+                    </ul>
+
+                    <!-- Сводка по зарплате -->
+                    <div class="salary-summary" id="salarySummary">
+                        <div class="summary-row">
+                            <span>Общий доход:</span>
+                            <span id="totalIncome">$0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Общие расходы:</span>
+                            <span id="totalExpenses">$0</span>
+                        </div>
+                        <div class="summary-row total-salary">
+                            <span>Зарплата:</span>
+                            <span id="salaryAmount">$0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка: Активы и Пассивы -->
+            <div class="financial-sections">
+                <!-- Активы -->
+                <div class="section assets">
+                    <h3>
+                        🏠 Активы (источники доходов)
+                        <button class="add-btn" onclick="toggleAddForm('asset')">+ Добавить</button>
+                    </h3>
+
+                    <!-- Форма добавления актива -->
+                    <div class="add-form" id="assetForm">
+                        <div class="form-row">
+                            <input type="text" id="assetName" placeholder="Название актива">
+                            <select id="assetType">
+                                <option value="stocks">Акции</option>
+                                <option value="realestate">Недвижимость</option>
+                                <option value="business">Бизнес</option>
+                                <option value="other">Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-row" id="stocksFields">
+                            <input type="number" id="stocksQuantity" placeholder="Количество акций">
+                            <input type="number" id="stocksPrice" placeholder="Цена за акцию ($)">
+                        </div>
+                        <div class="form-row" id="realestateFields" style="display: none;">
+                            <input type="number" id="downPayment" placeholder="Первый взнос ($)">
+                            <input type="number" id="propertyPrice" placeholder="Цена недвижимости ($)">
+                        </div>
+                        <div class="form-row" id="businessFields" style="display: none;">
+                            <input type="number" id="businessDownPayment" placeholder="Первый взнос ($)">
+                            <input type="number" id="businessPrice" placeholder="Цена бизнеса ($)">
+                        </div>
+                        <div class="form-row" id="otherAssetFields" style="display: none;">
+                            <input type="text" id="assetDetails" placeholder="Описание актива">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="save-btn" onclick="addAsset()">Сохранить</button>
+                            <button class="cancel-btn" onclick="toggleAddForm('asset')">Отмена</button>
+                        </div>
+                    </div>
+
+                    <ul class="item-list" id="assetsList">
+                        <!-- Активы будут добавляться здесь динамически -->
+                    </ul>
+                </div>
+
+                <!-- Пассивы -->
+                <div class="section liabilities">
+                    <h3>
+                        🏦 Пассивы (источники расходов)
+                        <button class="add-btn" onclick="toggleAddForm('liability')">+ Добавить</button>
+                    </h3>
+
+                    <!-- Форма добавления пассива -->
+                    <div class="add-form" id="liabilityForm">
+                        <div class="form-row">
+                            <input type="text" id="liabilityName" placeholder="Название пассива">
+                            <input type="text" id="liabilityDetails" placeholder="Описание">
+                        </div>
+                        <div class="form-buttons">
+                            <button class="save-btn" onclick="addLiability()">Сохранить</button>
+                            <button class="cancel-btn" onclick="toggleAddForm('liability')">Отмена</button>
+                        </div>
+                    </div>
+
+                    <ul class="item-list" id="liabilitiesList">
+                        <!-- Пассивы будут добавляться здесь динамически -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Панель банкира -->
+        <div class="banker-panel" id="bankerPanel">
+            <h3>Панель банкира</h3>
+            <div class="banker-controls">
+                <button class="control-btn salary-btn" onclick="paySalary()">
+                    Выдать зарплату
+                </button>
+                <button class="control-btn transaction-btn" onclick="showTransactionModal()">
+                    Провести операцию
+                </button>
+                <button class="control-btn qr-btn" onclick="showQRCodeModal()">
+                    Показать QR-код
+                </button>
+            </div>
+
+            <!-- Список подключенных игроков -->
+            <div class="connected-players" id="connectedPlayers">
+                <h4>Подключенные игроки:</h4>
+                <div class="players-list" id="playersList">
+                    <!-- Игроки будут появляться здесь -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Панель игрока -->
+        <div class="player-panel" id="playerPanel">
+            <h3>Панель игрока</h3>
+            <div class="player-controls">
+                <button class="control-btn qr-btn" onclick="scanRoomQR()">
+                    📷 Сканировать QR комнаты
+                </button>
+                <button class="control-btn scan-btn" onclick="scanSalaryQR()">
+                    💰 Сканировать QR зарплаты
+                </button>
+            </div>
+        </div>
+    </div>
+    </div>
     </div>
 
     <!-- Модальное окно для операций -->
