@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скала для оценки мужей</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Marck+Script&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #f5e9d8;
+            color: #3d2b1f;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path fill="%23d4b78c" fill-opacity="0.2" d="M0,0 L100,0 L100,100 L0,100 Z M10,10 L90,10 L90,90 L10,90 Z" stroke="%23a67c52" stroke-width="2"/><path fill="none" stroke="%23a67c52" stroke-width="1" d="M20,20 L80,80 M80,20 L20,80"/></svg>');
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: rgba(255, 248, 235, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border: 8px double #8b4513;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: linear-gradient(to right, #8b4513, #d2691e, #8b4513);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #8b4513;
+        }
+        
+        h1 {
+            font-family: 'Marck Script', cursive;
+            font-size: 3rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #654321;
+        }
+        
+        .instructions {
+            background-color: #f0e0c8;
+            border-left: 5px solid #8b4513;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 10px 10px 0;
+            font-size: 1.1rem;
+        }
+        
+        .calculator {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .calculator {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .positive-traits, .negative-traits {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .positive-traits {
+            background-color: #e8f4e8;
+            border: 2px solid #2e8b57;
+        }
+        
+        .negative-traits {
+            background-color: #f8e8e8;
+            border: 2px solid #8b0000;
+        }
+        
+        .section-title {
+            font-family: 'Marck Script', cursive;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed currentColor;
+        }
+        
+        .positive-traits .section-title {
+            color: #2e8b57;
+        }
+        
+        .negative-traits .section-title {
+            color: #8b0000;
+        }
+        
+        .trait {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            padding: 8px 5px;
+            border-radius: 5px;
+            transition: background-color 0.2s;
+        }
+        
+        .positive-traits .trait:hover {
+            background-color: #d4e8d4;
+        }
+        
+        .negative-traits .trait:hover {
+            background-color: #f0d8d8;
+        }
+        
+        .trait label {
+            flex-grow: 1;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .trait input {
+            margin-right: 10px;
+            transform: scale(1.3);
+            cursor: pointer;
+        }
+        
+        .points {
+            font-weight: bold;
+            font-size: 1.2rem;
+            min-width: 50px;
+            text-align: right;
+        }
+        
+        .positive-traits .points {
+            color: #2e8b57;
+        }
+        
+        .negative-traits .points {
+            color: #8b0000;
+        }
+        
+        .result-section {
+            text-align: center;
+            padding: 20px;
+            background-color: #f5f0e6;
+            border-radius: 10px;
+            border: 3px solid #8b4513;
+            margin-top: 20px;
+        }
+        
+        .total-score {
+            font-family: 'Marck Script', cursive;
+            font-size: 2.5rem;
+            color: #8b0000;
+            margin: 15px 0;
+        }
+        
+        .score-value {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #8b4513;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .verdict {
+            font-size: 1.3rem;
+            margin-top: 15px;
+            font-style: italic;
+            color: #654321;
+            min-height: 30px;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        #calculate {
+            background-color: #8b4513;
+            color: white;
+        }
+        
+        #calculate:hover {
+            background-color: #a0522d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        #reset {
+            background-color: #d4b78c;
+            color: #3d2b1f;
+        }
+        
+        #reset:hover {
+            background-color: #e0c9a6;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #8b4513;
+            font-size: 0.9rem;
+            color: #654321;
+            font-style: italic;
+        }
+        
+        .ornament {
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 10px;
+            color: #8b4513;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="ornament">✻ ✻ ✻</div>
+            <h1>Скала для оценки мужей</h1>
+            <div class="subtitle">По древнерусским меркам и обычаям</div>
+            <div class="ornament">✻ ✻ ✻</div>
+        </header>
+        
+        <div class="instructions">
+            <p>Отметьте качества, которые присутствуют у оцениваемого мужа. Положительные качества добавляют баллы, отрицательные — вычитают. Нажмите "Подсчитать баллы" для получения итоговой оценки.</p>
+        </div>
+        
+        <div class="calculator">
+            <div class="positive-traits">
+                <h2 class="section-title">Добрые качества</h2>
+                <!-- Положительные качества будут сгенерированы JavaScript -->
+            </div>
+            
+            <div class="negative-traits">
+                <h2 class="section-title">Худые качества</h2>
+                <!-- Отрицательные качества будут сгенерированы JavaScript -->
+            </div>
+        </div>
+        
+        <div class="result-section">
+            <h2 class="section-title">Итоговая оценка</h2>
+            <div class="total-score">Сумма баллов:</div>
+            <div class="score-value" id="totalScore">0</div>
+            <div class="verdict" id="verdict"></div>
+            
+            <div class="buttons">
+                <button id="calculate">Подсчитать баллы</button>
+                <button id="reset">Очистить</button>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Используйте сей инструмент с мудростью и рассудительностью, как подобает доброй жене.</p>
+            <p>© По мотивам древнерусских наставлений</p>
+        </footer>
+    </div>
+
+    <script>
+        // Данные для положительных качеств
+        const positiveTraits = [
+            { text: "Наличие высшего образования или хорошего положения в обществе", points: 25 },
+            { text: "Симпатичная внешность", points: 5 },
+            { text: "Согласие на отсутствие детей в течение первых 3—4 лет", points: 15 },
+            { text: "Не курит", points: 10 },
+            { text: "Не пьет", points: 20 },
+            { text: "Оказание ощутимой материальной помощи семье родителей мужа", points: 10 },
+            { text: "Хорошее воспитание, такт и скромность в обращении с женой", points: 15 },
+            { text: "Умение поддерживать исправность жилища", points: 10 },
+            { text: "Знание половых ласк и умелое их применение", points: 30 },
+            { text: "Знание «Ласк Жофрея»", points: 40 },
+            { text: "Забота о половом здоровье жены (не позволяет беременеть)", points: 25 }
+        ];
+        
+        // Данные для отрицательных качеств
+        const negativeTraits = [
+            { text: "Низкое образование по сравнению с женой или ничтожное положение в обществе", points: -15 },
+            { text: "Разница в возрасте более 13 лет", points: -15 },
+            { text: "Необоснованно ревнует", points: -30 },
+            { text: "Изменяет", points: -30 },
+            { text: "Состоял ранее в браке и имеет детей", points: -40 },
+            { text: "Увлечение (хобби), связанное с оставлением жены одной (в том числе и рыбалка)", points: -60 },
+            { text: "Слабое здоровье", points: -15 },
+            { text: "Низкая половая способность или отсутствие технических навыков в ласках", points: -20 },
+            { text: "Непроверенное прошлое (был в тюрьме, венерическая болезнь и т. д.)", points: -25 }
+        ];
+        
+        // Генерация положительных качеств
+        const positiveContainer = document.querySelector('.positive-traits');
+        positiveTraits.forEach((trait, index) => {
+            const traitElement = document.createElement('div');
+            traitElement.className = 'trait';
+            traitElement.innerHTML = `
+                <label>
+                    <input type="checkbox" id="positive-${index}" data-points="${trait.points}">
+                    ${trait.text}
+                </label>
+                <div class="points">+${trait.points}</div>
+            `;
+            positiveContainer.appendChild(traitElement);
+        });
+        
+        // Генерация отрицательных качеств
+        const negativeContainer = document.querySelector('.negative-traits');
+        negativeTraits.forEach((trait, index) => {
+            const traitElement = document.createElement('div');
+            traitElement.className = 'trait';
+            traitElement.innerHTML = `
+                <label>
+                    <input type="checkbox" id="negative-${index}" data-points="${trait.points}">
+                    ${trait.text}
+                </label>
+                <div class="points">${trait.points}</div>
+            `;
+            negativeContainer.appendChild(traitElement);
+        });
+        
+        // Функция расчета баллов
+        function calculateScore() {
+            let totalScore = 0;
+            
+            // Считаем положительные баллы
+            const positiveCheckboxes = document.querySelectorAll('.positive-traits input[type="checkbox"]');
+            positiveCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    totalScore += parseInt(checkbox.getAttribute('data-points'));
+                }
+            });
+            
+            // Считаем отрицательные баллы
+            const negativeCheckboxes = document.querySelectorAll('.negative-traits input[type="checkbox"]');
+            negativeCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    totalScore += parseInt(checkbox.getAttribute('data-points'));
+                }
+            });
+            
+            // Обновляем результат
+            document.getElementById('totalScore').textContent = totalScore;
+            
+            // Определяем вердикт
+            const verdictElement = document.getElementById('verdict');
+            let verdict = "";
+            
+            if (totalScore >= 100) {
+                verdict = "Достойнейший муж! Храни его Господь и не отпускай от себя.";
+            } else if (totalScore >= 60) {
+                verdict = "Муж добрый и достойный. Жить можно.";
+            } else if (totalScore >= 30) {
+                verdict = "Муж как муж. Есть над чем поработать.";
+            } else if (totalScore >= 0) {
+                verdict = "На грани допустимого. Присматривай за ним.";
+            } else if (totalScore >= -30) {
+                verdict = "Не лучший выбор. Подумай о будущем.";
+            } else if (totalScore >= -60) {
+                verdict = "Худой муж. Стоит ли терпеть?";
+            } else {
+                verdict = "Беги, пока не поздно!";
+            }
+            
+            verdictElement.textContent = verdict;
+        }
+        
+        // Функция сброса всех чекбоксов
+        function resetForm() {
+            const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+            allCheckboxes.forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.getElementById('totalScore').textContent = "0";
+            document.getElementById('verdict').textContent = "";
+        }
+        
+        // Назначаем обработчики событий
+        document.getElementById('calculate').addEventListener('click', calculateScore);
+        document.getElementById('reset').addEventListener('click', resetForm);
+        
+        // Добавляем обработчики для каждого чекбокса для автоматического пересчета
+        const allCheckboxes = document.querySelectorAll('input[type="checkbox"]');
+        allCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calculateScore);
+        });
+        
+        // Инициализируем расчет при загрузке
+        calculateScore();
+    </script>
+</body>
+</html>
